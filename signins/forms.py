@@ -7,4 +7,8 @@ class SignInForm(Form):
 
 
 class CheckForm(Form):
-    date = forms.DateField(input_formats=["%Y/%m/%d"], label='Date\nYY/MM/DD')
+    date = forms.DateField(
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+            'class': 'form-control'
+        }))

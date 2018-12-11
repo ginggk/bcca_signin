@@ -20,5 +20,6 @@ from signins import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Home.as_view(), name='home'),
-    path('signin/', views.SignIn.as_view(), name='signin')
+    path('signin/', views.SignIn.as_view(), name='signin'),
+    path('check/', views.Check.as_view(), name='check')
 ]

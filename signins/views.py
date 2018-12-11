@@ -39,3 +39,22 @@ class SignIn(View):
                 return render(request, 'signin.html', {'form': form})
         else:
             return render(request, 'signin.html', {'form': form})
+
+
+class Check(View):
+    def get(self, request):
+        return render(request, 'signin_check.html',
+                      {'form': forms.CheckForm()})
+
+    def post(self, request):
+        form = forms.CheckForm(data=request.POST)
+        # date_requested = Chec
+        if form.is_valid():
+            date = form.cleaned_data['date']
+            students = models.Student.attendance(date)
+            return render(request, 'signin_check.html', {
+                'form': form,
+                'students': students
+            })
+        else:
+            return render(request, 'signin_check.html', {'form': form})

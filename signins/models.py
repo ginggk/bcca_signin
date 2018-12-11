@@ -13,3 +13,9 @@ class Student(models.Model):
     @staticmethod
     def submitted(name):
         Student(name=name).save()
+
+    @staticmethod
+    def attendance(date):
+        return Student.objects.values('name').filter(
+            is_signedin__gte=date).annotate(
+                num=models.Count('*')).order_by('-num')

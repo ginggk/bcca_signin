@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from . import forms
 from signins import models
+from datetime import date
 
 # Create your views here.
 student_list = [
@@ -25,9 +26,15 @@ class SignIn(View):
         form = forms.SignInForm(data=request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
+            today = date.today()
             if name in student_list:
-                models.Student.submitted(name)
-                return redirect('home')
+                recent = len(models.Student.objects.filter(name=name))
+                if today != models.Student.objects.filter(
+                        name=name)[recent - 1].is_signedin:
+                    models.Student.submitted(name)
+                    return redirect('home')
+                else:
+                    return render(request, 'signin.html', {'form': form})
             else:
                 return render(request, 'signin.html', {'form': form})
         else:

@@ -8,7 +8,7 @@ class Student(models.Model):
     is_signedin = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        self.name
+        return self.name
 
     @staticmethod
     def submitted(name):
